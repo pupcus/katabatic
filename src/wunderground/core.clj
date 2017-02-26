@@ -1,6 +1,7 @@
 (ns wunderground.core
-  (:require [clj-http.client :as http]
-            [cheshire.core :as json]))
+  (:require [cheshire.core :as json]
+            [clj-http.client :as http]
+            [clojure.string :as str]))
 
 (defn get-configuration []
   (-> ".lein-env"
@@ -10,16 +11,100 @@
 (defn get-key []
   (get-in (get-configuration) [:wunderground :key]))
 
-(def base-url "http://api.wunderground.com/api")
+(defn decode [results]
+  (try
+    (json/decode results true)
+    (catch Exception e
+      results)))
 
-(defn get-some-data [topic {:keys [city state zip] :as location}]
-  (:body
-   (http/get (format "%s/%s/%s/q/%s/%s.json" base-url (get-key) (name topic) state city))))
+(defn wunderground [url]
+  (decode
+   (:body
+    (http/get url))))
+
+(def api-url "http://api.wunderground.com/api")
+
+(defn base-url [topics]
+  (format "%s/%s/%s" api-url (get-key) (str/join "/" (map name topics))))
+
+(defn format-specified? [s]
+  (some
+   (fn [fs]
+     (.contains s fs))
+   ["json" "xml"]))
+
+(defn query-string [format & args]
+  (let [base_qs (when args
+                  (str/join "/" args))
+        qs (when base_qs
+             (if (format-specified? base_qs)
+               base_qs
+               (str base_qs "." format)))]
+    (str/join
+     "/"
+     (if qs
+       ["q" qs]
+       [(str "view." format)]))))
+
+(defn extract-args [{:keys [format lat lon country city state zip airport pws auto ip]
+                     :or {format "json"}}]
+  (cond
+    airport [airport]
+
+    zip [zip]
+
+    pws [(str "pws:" pws)]
+
+    (and lat
+         lon) [(str lat "," lon)]
+
+    (and city
+         state
+         (empty? country)) [state city]
+
+    (and country
+         city
+         (empty? state)) [country city]
+
+    (or auto
+        ip) [(str "autoip"
+                  (when ip
+                    (str "." format "?geo_ip=" ip)))]))
+
+(defn build-url
+  ([topics] (build-url topics {:format "json"}))
+  ([topics {:keys [format] :as options :or {format "json"}}]
+   (let [args (extract-args options)]
+     (str/join
+      "/"
+      [(base-url topics)
+       (apply query-string format args)]))))
+
+(defn weather-info
+  ([topics] (weather-info topics {}))
+  ([topics options]
+   (wunderground (build-url topics options))))
 
 (comment
-  (json/decode
-   (get-some-data :conditions {:state "VA" :city "Midlothian"})
-   true))
+  "Example request"
+  (weather-info [:conditions
+                 :forecast10day
+                 :yesterday
+                 :geolookup
+                 :astronomy
+                 :alerts
+                 :satellite
+                 :tide
+                 :rawtide
+                 :almanac
+                 :currenthurricane
+                 :radar
+                 :webcams]
+                {:lat "38.876078"
+                 :lon "-77.157309"
+                 :format "json"}))
 
-(defn forecast [city state]
-  {:forecast {:temp "71"}})
+
+
+
+
