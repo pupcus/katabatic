@@ -4,7 +4,7 @@ This is a WIP (work in progress/under construction). This is some clojure code d
 
 ## Usage
 
-To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid APIB key. Then create a .lein-env file in the project root directory and put something like this in it:
+To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid API key. Then create a .lein-env file in the project root directory and put something like this in it:
 
 ```clojure
 {
