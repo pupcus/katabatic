@@ -1,6 +1,6 @@
 # wunderground
 
-This is a WIP (work in progress/under construction). This is some clojure code designed to access weather underground api data and explore it. I am learning about how to use third party apis that have json results.
+This is a WIP (work in progress/under construction). This is some clojure code for getting weather statistics from Weather Underground. I am learning about how to use third party APIs.
 
 ## Usage
 
@@ -63,9 +63,15 @@ We have set it so that it will automatically choose your location (based on your
 ```
 **You can get latitude and longitude from [Google Maps](https://google.com/maps).
 
-
+## Thanks
+A huge thanks to Weather Underground for making the API, and thanks to my dad for helping me out when I couldn't figure out how to do something.
 ## License
 
 Copyright © 2017 jbmagination
 
 Distributed under the Eclipse Public License either version 1.0 or any later version.
+
+---
+
+Powered by Weather Underground. Weather Underground is a registered trademark of The Weather Channel, LLC. both in the United States and internationally. The Weather Underground Logo is a trademark of Weather Underground, LLC.
+![Weather Underground logo is supposed to be here, but since it didnt load, it wont appear](https://www.wunderground.com/logos/images/wundergroundLogo_4c_horz.jpg)
