@@ -7,12 +7,8 @@
       slurp
       read-string))
 
-(get-configuration)
-
 (defn get-key []
   (get-in (get-configuration) [:wunderground :key]))
-
-(get-key)
 
 (def base-url "http://api.wunderground.com/api")
 
@@ -20,11 +16,10 @@
   (:body
    (http/get (format "%s/%s/%s/q/%s/%s.json" base-url (get-key) (name topic) state city))))
 
-(get-in
+(comment
+  (json/decode
+   (get-some-data :conditions {:state "VA" :city "Midlothian"})
+   true))
 
- [:current_observation :wind_mph])
-
-
-(json/decode
- (get-some-data :conditions {:state "VA" :city "Midlothian"})
- true)
+(defn forecast [city state]
+  {:forecast {:temp "71"}})
