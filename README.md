@@ -34,7 +34,7 @@ You must provide location information if you ask for anything besides hurricane 
 ```
 We have set it so that it will automatically choose your location (based on your IP) by default. But you can specify your location in many ways. Options include:
 ```clojure
-;; lat/lon location
+;; lat/lon location*
 {:lat "38.976"
  :lon "-77.157"}
 
@@ -53,7 +53,7 @@ We have set it so that it will automatically choose your location (based on your
 ;; specific ip address (example is google's nameserver address)
 {:ip "8.8.8.8"}
 ```
-You can get latitude and longitude from [Google Maps](https://google.com/maps).
+*You can get latitude and longitude from [Google Maps](https://google.com/maps).
 
 
 ## License
