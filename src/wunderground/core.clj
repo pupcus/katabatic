@@ -87,6 +87,10 @@
   ([topics options]
    (wunderground (build-url topics options))))
 
+(defn get-weather [{:keys [topics location format] :as request :or {format "json"}}]
+  (let [options (merge location {:format format})]
+    (weather-info topics options)))
+
 (comment
   "Example request"
   (weather-info [:conditions
