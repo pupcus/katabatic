@@ -69,7 +69,9 @@
     (or auto
         ip) [(str "autoip"
                   (when ip
-                    (str "." format "?geo_ip=" ip)))]))
+                    (str "." format "?geo_ip=" ip)))]
+
+    :default ["autoip"]))
 
 (defn build-url
   ([topics] (build-url topics {:format "json"}))
