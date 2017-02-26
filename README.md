@@ -32,8 +32,16 @@ You must provide location information if you ask for anything besides hurricane 
 ```clojure
 (weather-info [:conditions :alerts])
 ```
+For example, if you want to use your zip code you can do this:
+```clojure
+;; the zip we used is in Madison, Wisconsin.
+(weather-info [:conditions :forecast10day] {:zip "53718"})
+```
 We have set it so that it will automatically choose your location (based on your IP) by default. But you can specify your location in many ways. Options include:
 ```clojure
+;; zipcode
+{:zip "53718"}
+
 ;; lat/lon location*
 {:lat "38.976"
  :lon "-77.157"}
