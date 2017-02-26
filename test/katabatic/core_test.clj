@@ -1,5 +1,5 @@
-(ns wunderground.core-test
-  (:require [wunderground.core :as subject]
+(ns katabatic.core-test
+  (:require [katabatic.core :as subject]
             [clojure.test :refer :all]))
 
 (deftest forecast-function

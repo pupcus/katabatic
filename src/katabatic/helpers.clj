@@ -1,4 +1,4 @@
-(ns wunderground.helpers)
+(ns katabatic.helpers)
 
 (defmacro helper-fn [kw]
   `(fn fn#

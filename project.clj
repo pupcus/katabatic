@@ -1,4 +1,4 @@
-(defproject wunderground "0.0.1-SNAPSHOT"
+(defproject katabatic "0.0.2-SNAPSHOT"
 
   :description "weather underground api exploration"
 

@@ -1,4 +1,4 @@
-(ns wunderground.core
+(ns katabatic.core
   (:require [cheshire.core :as json]
             [clj-http.client :as http]
             [clojure.string :as str]))

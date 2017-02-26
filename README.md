@@ -1,9 +1,8 @@
-# wunderground
+# katabatic
 
 This is a WIP (work in progress/under construction). This is some clojure code for getting weather statistics from Weather Underground. I am learning about how to use third party APIs.
 
 ## Usage
-
 To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid API key. Then create a .lein-env file in the project root directory and put something like this in it:
 
 ```clojure
@@ -63,10 +62,23 @@ We have set it so that it will automatically choose your location (based on your
 ```
 **You can get latitude and longitude from [Google Maps](https://google.com/maps).
 
+## Helpers
+There is a small DSL for writing requests to the API. Here is an example:
+``` clojure
+(require '[katabatic.core :as c])
+(require '[katabatic.helpers :as h])
+
+(-> (h/alerts)
+    (h/conditions)
+    c/get-weather)
+```
+
+See the helpers.clj (and the tests at some point) for all the helper functions you have availiable.
+
 ## Thanks
 A huge thanks to Weather Underground for making the API, and thanks to my dad for helping me out when I couldn't figure out how to do something.
-## License
 
+## License
 Copyright © 2017 jbmagination
 
 Distributed under the Eclipse Public License either version 1.0 or any later version.
