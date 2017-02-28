@@ -3,38 +3,28 @@
 This is a WIP (work in progress/under construction). This is some clojure code for getting weather information from Weather Underground. I am learning about how to use third party APIs.
 
 ## Usage
-To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid API key. Then create a .lein-env file in the project root directory and put something like this in it:
-
-```clojure
-{
- :wunderground
- {
-  :key "YOUR-API-KEY-GOES-HERE"
- }
-}
-```
+To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid API key.
 
 There are various 'data sets' that you can ask for from Weather Underground via their API.
 
 For example, if you want to get tropical storms, you can get an Anvil Developer key, and then run this command:
 
 ```clojure
-(weather-info [:currenthurricane])
+(get-weather {:apikey "APIKEY_GOES_HERE" :topics ["currenthurricane"]})
 ```
-The default format is JSON, so it will give you JSON output, but you can also give XML output:
+The default format is JSON, so it will give you JSON output, but you can also get XML output:
 ```clojure
-(weather-info [:currenthurricane] {:format "xml"}])
+(get-weather {:apikey "APIKEY_GOES_HERE" :topics ["currenthurricane"] :format "xml"})
+
 ```
 You can ask for more then one topic at a time though! See the API for more info on the topics you can use.
 
 You must provide location information if you ask for anything besides hurricane info. For example:
 ```clojure
-(weather-info [:conditions :alerts])
-```
-For example, if you want to use your zip code you can do this:
-```clojure
-;; *the zip we used is in Madison, Wisconsin.
-(weather-info [:conditions :forecast10day] {:zip "53718"})
+(get-weather {:apikey "APIKEY_GOES_HERE"
+              :topics ["currenthurricane" "conditions" "alerts" "almanac"]
+              :location {:zip "58718"}
+              :format "json"})
 ```
 We have set it so that it will automatically choose your location (based on your IP) by default. But you can specify your location in many ways. Options include:
 ```clojure
@@ -67,10 +57,13 @@ There is a small DSL for writing requests to the API. Here is an example:
 ``` clojure
 (require '[katabatic.core :as c])
 (require '[katabatic.helpers :as h])
+(require '[cheshire.core :as json])
 
-(-> (h/alerts)
+(-> (h/with-api-key "APIKEY")
+    (h/alerts)
     (h/conditions)
-    c/get-weather)
+    (c/get-weather)
+    (json/decode true))
 ```
 
 See the helpers.clj (and the tests at some point) for all the helper functions you have availiable.
