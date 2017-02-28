@@ -34,3 +34,8 @@
   ([format] (with-format {} format))
   ([m format]
    (assoc m :format (name format))))
+
+(defn with-api-key
+  ([apikey] (with-api-key {} apikey))
+  ([m apikey]
+   (assoc m :apikey apikey)))

@@ -1,33 +1,17 @@
 (ns katabatic.core
-  (:require [cheshire.core :as json]
-            [clj-http.client :as http]
+  (:require [clj-http.client :as http]
             [clojure.string :as str]))
 
-(defn get-configuration []
-  (-> ".lein-env"
-      slurp
-      read-string))
-
-(defn get-key []
-  (get-in (get-configuration) [:wunderground :key]))
-
-(defn decode [results]
-  (try
-    (json/decode results true)
-    (catch Exception e
-      results)))
-
 (defn wunderground [url]
-  (decode
-   (:body
-    (http/get url))))
+  (:body
+   (http/get url)))
 
 (def api-url "http://api.wunderground.com/api")
 
-(defn base-url [topics]
-  (format "%s/%s/%s" api-url (get-key) (str/join "/" (map name topics))))
+(defn base-url [apikey topics]
+  (format "%s/%s/%s" api-url apikey (str/join "/" (map name topics))))
 
-(defn format-specified? [s]
+(defn format-specified? [^String s]
   (some
    (fn [fs]
      (.contains s fs))
@@ -46,8 +30,8 @@
        ["q" qs]
        [(str "view." format)]))))
 
-(defn extract-args [{:keys [format lat lon country city state zip airport pws auto ip]
-                     :or {format "json"}}]
+(defn extract-args [format {:keys [lat lon country city state zip airport pws auto ip]
+                            :as location}]
   (cond
     airport [airport]
 
@@ -73,44 +57,15 @@
 
     :default ["autoip"]))
 
-(defn build-url
-  ([topics] (build-url topics {:format "json"}))
-  ([topics {:keys [format] :as options :or {format "json"}}]
-   (let [args (extract-args options)]
-     (str/join
-      "/"
-      [(base-url topics)
-       (apply query-string format args)]))))
+(defn build-url [{:keys [apikey topics format location]
+                  :or {topics ["conditions"]
+                       format "json"}
+                  :as options}]
+  (let [args (extract-args format location)]
+    (str/join
+     "/"
+     [(base-url apikey topics)
+      (apply query-string format args)])))
 
-(defn weather-info
-  ([topics] (weather-info topics {}))
-  ([topics options]
-   (wunderground (build-url topics options))))
-
-(defn get-weather [{:keys [topics location format] :as request :or {format "json"}}]
-  (let [options (merge location {:format format})]
-    (weather-info topics options)))
-
-(comment
-  "Example request"
-  (weather-info [:conditions
-                 :forecast10day
-                 :yesterday
-                 :geolookup
-                 :astronomy
-                 :alerts
-                 :satellite
-                 :tide
-                 :rawtide
-                 :almanac
-                 :currenthurricane
-                 :radar
-                 :webcams]
-                {:lat "38.876078"
-                 :lon "-77.157309"
-                 :format "json"}))
-
-
-
-
-
+(defn get-weather [options]
+  (wunderground (build-url options)))
