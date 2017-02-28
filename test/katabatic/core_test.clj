@@ -40,6 +40,8 @@
            (subject/extract-args "" {:city "city" :state "state"})))
     (is (= ["country" "city"]
            (subject/extract-args "" {:city "city" :country "country"})))
+    (is (= ["country" "state" "city"]
+           (subject/extract-args "" {:city "city" :state "state" :country "country"})))
     (is (= ["autoip"]
            (subject/extract-args "" {:auto true})))
     (is (= ["autoip.format?geo_ip=ip_address"]

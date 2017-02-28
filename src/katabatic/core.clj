@@ -50,6 +50,10 @@
          city
          (empty? state)) [country city]
 
+    (and country
+         state
+         city) [country state city]
+
     (or auto
         ip) [(str "autoip"
                   (when ip
