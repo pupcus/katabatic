@@ -50,9 +50,9 @@ We have set it so that it will automatically choose your location (based on your
 ;; specific ip address (example is google's nameserver address)
 {:ip "8.8.8.8"}
 ```
+\* The zip we used is in Madison, Winsconsin
 
-* The zip we used is in Madison, Winsconsin.
-** You can get latitude and longitude from [Google Maps](https://google.com/maps).
+\*\* You can get latitude and longitude from [Google Maps](https://google.com/maps).
 
 ## Helpers
 There is a small DSL for writing requests to the API. Here is an example:
