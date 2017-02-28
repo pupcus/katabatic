@@ -17,13 +17,13 @@ The default format is JSON, so it will give you JSON output, but you can also ge
 (get-weather {:apikey "APIKEY_GOES_HERE" :topics ["currenthurricane"] :format "xml"})
 
 ```
-You can ask for more then one topic at a time though! See the API for more info on the topics you can use.
+Another feature is that you can ask for multiple topics at a time! See the API for more info on the topics you can use.
 
 You must provide location information if you ask for anything besides hurricane info. For example:
 ```clojure
 (get-weather {:apikey "APIKEY_GOES_HERE"
               :topics ["currenthurricane" "conditions" "alerts" "almanac"]
-              :location {:zip "58718"}
+              :location {:zip "58718"} ;; <-- location by zipcode*
               :format "json"})
 ```
 We have set it so that it will automatically choose your location (based on your IP) by default. But you can specify your location in many ways. Options include:
@@ -50,7 +50,9 @@ We have set it so that it will automatically choose your location (based on your
 ;; specific ip address (example is google's nameserver address)
 {:ip "8.8.8.8"}
 ```
-**You can get latitude and longitude from [Google Maps](https://google.com/maps).
+
+* The zip we used is in Madison, Winsconsin.
+** You can get latitude and longitude from [Google Maps](https://google.com/maps).
 
 ## Helpers
 There is a small DSL for writing requests to the API. Here is an example:
@@ -60,6 +62,7 @@ There is a small DSL for writing requests to the API. Here is an example:
 (require '[cheshire.core :as json])
 
 (-> (h/with-api-key "APIKEY")
+    (h/for-location :city "Seattle" :state "WA")
     (h/alerts)
     (h/conditions)
     (c/get-weather)
@@ -69,7 +72,7 @@ There is a small DSL for writing requests to the API. Here is an example:
 See the helpers.clj (and the tests at some point) for all the helper functions you have availiable.
 
 ## Thanks
-A huge thanks to Weather Underground for making the API, and thanks to my dad for helping me out when I couldn't figure out how to do something.
+A huge thanks to Weather Underground for making the API, and to my dad for helping me out when I couldn't figure out how to do something.
 
 ## License
 Copyright © 2017 jbmagination
