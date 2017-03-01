@@ -1,6 +1,6 @@
 # katabatic
 
-This is a WIP (work in progress/under construction). This is some clojure code for getting weather information from Weather Underground. I am learning about how to use third party APIs.
+This is a Clojure API wrapper for Weather Underground's API. I hope you find it useful.
 
 ## Usage
 To use this program, you need to register at [Weather Underground](https://www.wunderground.com/weather/api/) and get a valid API key.
