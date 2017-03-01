@@ -85,4 +85,4 @@ Distributed under the Eclipse Public License either version 1.0 or any later ver
 ---
 
 Powered by Weather Underground. Weather Underground is a registered trademark of The Weather Channel, LLC. both in the United States and internationally. The Weather Underground Logo is a trademark of Weather Underground, LLC.
-![Weather Underground logo is supposed to be here, but since it didnt load, it wont appear](https://www.wunderground.com/logos/images/wundergroundLogo_4c_horz.jpg)
+[![Weather Underground](https://www.wunderground.com/logos/images/wundergroundLogo_4c_horz.jpg)](http://wunderground.com)
