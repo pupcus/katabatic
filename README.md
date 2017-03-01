@@ -23,7 +23,7 @@ You must provide location information if you ask for anything besides hurricane 
 ```clojure
 (get-weather {:apikey "APIKEY_GOES_HERE"
               :topics ["currenthurricane" "conditions" "alerts" "almanac"]
-              :location {:zip "58718"} ;; <-- location by zipcode*
+              :location {:zip "53718"} ;; <-- location by zipcode*
               :format "json"})
 ```
 We have set it so that it will automatically choose your location (based on your IP) by default. But you can specify your location in many ways. Options include:
