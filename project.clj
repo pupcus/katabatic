@@ -1,4 +1,4 @@
-(defproject katabatic "1.0.0"
+(defproject katabatic "1.0.1-SNAPSHOT"
 
   :description "weather underground api exploration"
 
