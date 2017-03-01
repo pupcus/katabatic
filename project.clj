@@ -1,6 +1,10 @@
-(defproject katabatic "0.0.3-SNAPSHOT"
+(defproject katabatic "1.0.0-SNAPSHOT"
 
   :description "weather underground api exploration"
+
+  :url "https://github.com/jbmagination/katabatic"
+
+  :scm {:url "git@github.com:jbmagination/katabatic.git"}
 
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -14,10 +18,21 @@
 
   :deploy-repositories [["snapshots"
                          {:url "https://clojars.org/repo"
+                          :sign-releases false
                           :creds :gpg}]
                         ["releases"
                          {:url "https://clojars.org/repo"
+                          :sign-releases false
                           :creds :gpg}]]
+
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ["vcs" "tag" "--no-sign"]
+                  ["deploy"]
+                  ["change" "version" "leiningen.release/bump-version"]
+                  ["vcs" "commit"]
+                  ["vcs" "push"]]
 
   :global-vars {*warn-on-reflection* true
                 *assert* false})
