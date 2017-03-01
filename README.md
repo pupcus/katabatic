@@ -74,6 +74,9 @@ See the helpers.clj (and the tests at some point) for all the helper functions y
 ## Thanks
 A huge thanks to Weather Underground for making the API, and to my dad for helping me out when I couldn't figure out how to do something.
 
+## Badges
+[![Clojars Project](https://img.shields.io/clojars/v/katabatic.svg)](https://clojars.org/katabatic)
+
 ## License
 Copyright © 2017 jbmagination
 
